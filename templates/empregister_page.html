@@ -1,0 +1,129 @@
+{% load static %}
+
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta http-equiv="x-ua-compatible" content="IE=Edge">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>Регистрация сотрудника</title>
+    <link rel="shortcut icon" type="image/png" href="https://lkfl2.nalog.ru/lkfl/favicon.png">
+    <link rel="stylesheet" href="{% static 'chunk.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'chunk2.css' %}" type="text/css">
+    <style>
+
+        .form_item {
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body style="overflow: auto;">
+<div id="app" class="app-container">
+    <div id="scroll-wrapper" class="scroll-wrapper accessibilityThemeProvider_themeProvider__2eX6L">
+        <div class="main-page">
+            <div class="main-page_bg"><img src="{% static 'main.jpg' %}"></div>
+            <div class="header-wrapper header-wrapper__main">
+                <div class="header header__main content">
+                    <a class="header-title"><span class="header-title_icon"><img
+                            src="{% static 'logo-fns.png' %}"></span><span class="header-title_text">Личный кабинет налогоплательщика<br>для проведения научно-технической<br>экспретизы</span></a>
+                </div>
+            </div>
+            <div class="main-page_center">
+                <div class="main-page_cell">
+                    <div class="content">
+                        <div class="main-page_row main-page_row__small">
+                            <div class="white-block main-page_form">
+                                <h2>Регистрация сотрудника</h2>
+
+                                <div id="empreg">
+                                    <p style="color: green">[[success_msg]]</p>
+                                    <p style="color: red">[[err_msg]]</p>
+                                <form class="form" enctype="application/json">
+                                    {% csrf_token %}
+                                    <div class="form_item">
+                                        <div class="form_label">Фамилия</div>
+                                            <input type="text" class="form_field" v-model="last_name"
+                                                   required="true"/>
+                                    </div>
+
+                                    <div class="form_item">
+                                        <div class="form_label">Имя</div>
+                                            <input type="text" class="form_field" v-model="first_name"
+                                                   required="true"/>
+                                    </div>
+
+                                    <div class="form_item">
+                                        <div class="form_label">Отчество</div>
+                                            <input type="text" class="form_field" v-model="middle_name"
+                                                   required="true"/>
+                                    </div>
+
+                                    <div class="form_item">
+                                        <div class="form_label">Логин для входа</div>
+                                            <input type="text" class="form_field" v-model="username"
+                                                   required="true"/>
+                                    </div>
+
+                                    <div class="form_item">
+                                        <div class="form_label">Email</div>
+                                            <input type="email" class="form_field" v-model="email"
+                                                   required="true"/>
+                                    </div>
+
+                                    <div class="form_item">
+                                        <div class="form_label">Пароль</div>
+                                            <input id="password1" type="password" class="form_field" minlength="6" v-model="password1"
+                                                   required="true"/>
+                                    </div>
+
+                                    <div class="form_item">
+                                        <div class="form_label">Повтор пароля</div>
+                                            <input id="password2" type="password" class="form_field" minlength="6" v-model="password2"
+                                                   required="true"/>
+                                    </div>
+
+
+                                            <div class="form_error red page_margin20">
+                                                <strong>[[ password_errors ]]</strong>
+                                            </div>
+
+
+
+
+                                    <div class="cRow">
+                                        <div class="cCol cCol__50">
+                                            <div class="form_item">
+                                                <button value="submit" v-on:click.prevent="submitForm" class="Button_button__2Lf63 Button_button__medium__2mCsW Button_button__orange__3eFfI Button_button__100__2sNOJ"
+                                                        type="submit">Зарегистрироваться
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+                            <p><a href="#" class="link white link__underline">Вход в личный кабинет</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-wrapper">
+                <div class="footer footer__main content">
+                    <div class="footer_left">Система поддержки проведения научно-технических экспертиз</div>
+                </div>
+            </div>
+        </div>
+        <div class="Toastify"></div>
+    </div>
+</div>
+<div id="tooltipContainer"></div>
+
+<!-- include vuejs and axios -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<!-- vue js script for this page-->
+<script src="/static/empregister.js"></script>
+</body>
+</html>

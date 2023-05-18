@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Подать заявку</title>
+    <!-- Подключение bootstrap -->
+    <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .form-check {
+            display: block;
+            min-height: 1.5rem;
+            padding-left: 1.5em;
+            margin-bottom: 0.125rem;
+        }
+    </style>
+</head>
+<body class="bg-light">
+{% block content %}
+    <div id="app">
+        <p style="color: green">[[success_msg]]</p>
+        <p style="color: red">[[err_msg]]</p>
+        <main>
+            <div class="container-fluid" id="containerTextLeft">
+                <div class="row">
+                    <div class="col-10 col-lg-12">
+                        <div class="col-12">
+
+                            <div class="py-2 text-center">
+                                <p class="fs-4">Заявка на предварительную оценку определения правомерности применения
+                                    налоговой льготы</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 offset-1 col-lg-3 offset-lg-0 order-lg-last">
+                                    <div class="row">
+                                        <div class="row mb-3">
+                                            <label class="col-sm-12 col-form-label">
+                                                <span class="text-primary">
+                                                     <h5>
+                                                         Информация
+                                                     </h5>
+                                                </span>
+                                                <p class="lead">Заполните информацию о работе и прикрепите документы в
+                                                    формате <b>pdf или docx</b>, чтобы подать заявление на
+                                                    предварительную оценку определения правомерности применения
+                                                    налоговой льготы для НИОКР.</p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-8" id="formInput">
+                                    <div class="col-lg-11 offset-1">
+
+                                        <!-- form -->
+                                        <form enctype="multipart/form-data">
+                                            <div class="row">
+
+                                                <div class="row mb-3">
+                                                    <label for="title" class="col-4 col-form-label">Название
+                                                        работы</label>
+                                                    <div class="col-8">
+                                                        <input type="text" class="form-control" v-model="title"
+                                                               required="true"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label for="inputTheme" class="col-4 col-form-label theme-class">Тема
+                                                        работы</label>
+                                                    <div class="col-8">
+                                                        <!-- Перебор тем работ для добавления в список -->
+                                                        <select v-model="theme" required="true" class="form-control"
+                                                                id="theme-select">
+                                                            {% for t in themes %}
+                                                                <option value="{{ t.title }}">
+                                                                    {{ t.title }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label for="inputTheme" class="col-4 col-form-label">Тип
+                                                        работы</label>
+                                                    <div class="col-8">
+
+                                                        <!-- Перебор типов работ для добавления в список -->
+                                                        <select v-model="type" required="true" class="form-control"
+                                                                id="type-select">
+                                                            {% for t in project_types %}
+                                                                <option value="{{ t.title }}">
+                                                                    {{ t.title }}</option>
+                                                            {% endfor %}
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label for="inputStart" class="col-4 col-form-label">Дата начала
+                                                        выполнения</label>
+                                                    <div class="col-8">
+                                                        <input type="date" class="form-control" v-model="start_job"
+                                                               required="true" min="2010-01-01" max="{{ today }}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label for="inputEnd" class="col-4 col-form-label">Дата завершения
+                                                        выполнения</label>
+                                                    <div class="col-8">
+                                                        <input type="date" class="form-control" v-model="end_job"
+                                                               required="true" min="2010-01-01" max="{{ today }}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label for="formFile"
+                                                           class="col-4 col-form-label">Декларация</label>
+                                                    <div class="col-8">
+                                                        <input type="file" class="form-control" @change="getDeclarationFile" v-model="declaration"
+                                                               required="true"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <label for="formFile" class="col-4 col-form-label">Отчёт по
+                                                        работе</label>
+                                                    <div class="col-8">
+                                                        <input type="file" class="form-control" @change="getReportFile" v-model="report"
+                                                               required="true"/>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row mb-3">
+                                                    <label for="formFile" class="col-4 col-form-label">ТЗ по
+                                                        работе</label>
+                                                    <div class="col-8">
+                                                        <input type="file" class="form-control" @change="getSpecificationFile"
+                                                               v-model="specification"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <div class="col-8 offset-4">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input"
+                                                                   v-model="sp_checkbox"/>
+                                                            <label class="form-check-label" for="gridCheck">
+                                                                ТЗ отсутствует
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row mb-3">
+
+                                                    {% if form.non_field_errors %}
+                                                        {% for error in form.non_field_errors %}
+                                                            <div class="alert alert-danger">
+                                                                <strong>{{ error|escape }}</strong>
+                                                            </div>
+                                                        {% endfor %}
+                                                    {% endif %}
+
+                                                    {% if form.errors %}
+                                                        {% for field in form %}
+                                                            {% for error in field.errors %}
+                                                                <div class="alert alert-danger">
+                                                                    <strong>{{ error|escape }}</strong>
+                                                                </div>
+                                                            {% endfor %}
+                                                        {% endfor %}
+                                                    {% endif %}
+
+
+                                                </div>
+
+                                                {#                                                <input v-on:click.prevent="submitForm" type="submit" value="submit">#}
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="submit"
+                                                        class="Button_button__2Lf63 Button_button__medium__2mCsW Button_button__orange__3eFfI Button_button__100__2sNOJ"
+                                                        v-on:click.prevent="submitForm"
+                                                        value="submit">Отправить
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </main>
+    <!-- include vuejs and axios -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/docs/5.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+    <script>
+        window.case_list = "{% url 'case_list' %}"
+    </script>
+    <!-- vue js script for this page-->
+    <script src="/static/case_submit.js"></script>
+
+{% endblock %}
+</body>
+</html>

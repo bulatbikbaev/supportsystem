@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Экспертизы</title>
+    <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <style>
+
+    </style>
+</head>
+
+
+<body>
+
+{% block content %}
+
+    <main>
+        <div class="container-fluid">
+
+            {#{% if messages %}#}
+            {#        {% for message in messages %}#}
+            {#<div class="alert alert-success alert-dismissible fade show" role="alert">#}
+            {#  <strong>{{ message }}</strong>#}
+            {#  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>#}
+            {#</div>#}
+            {#        {% endfor %}#}
+            {#{% endif %}#}
+            {##}
+            {#{% if user.is_staff %}#}
+            {##}
+            {# <form action="" method="get">#}
+            {##}
+            {#  <div class="col-10 col-lg-8">#}
+            {#  <div class="col-12 offset-1">#}
+            {##}
+            {#<div class="row" style="margin-bottom: 30px;">#}
+            {#    <label for="number" class="col-2 col-form-label">Номер экспертизы</label>#}
+            {#  <div class="col-2">#}
+            {#    <input id="number" autocomplete="off" name="number" type="text" class="form-control">#}
+            {#  </div>#}
+            {#    <label for="number" class="col-2 col-form-label">Налогоплательщик</label>#}
+            {#  <div class="col-3">#}
+            {#      {{filterset.form.payer}}#}
+            {#  </div>#}
+            {##}
+            {#  <div class="col-3">#}
+            {#  <button type="submit" class="btn btn-primary">Найти</button>#}
+            {#  </div>#}
+            {#</div>#}
+            {##}
+            {#  </div>#}
+            {#  </div>#}
+            {##}
+            {#  </form>#}
+            {##}
+            {##}
+            {#{% endif %}#}
+            {% verbatim %}
+                <div id="cases" class="row">
+
+
+                    <div v-for="e in cases">
+
+                        <div class="col-10 col-lg-8">
+                            <div class="col-12 offset-1">
+
+                                <div class="card mb-3">
+
+                                    <div class="card-body">
+                                        <h5 class="card-title">Экспертиза №{{ e.number }} по работе:
+                                            "{{ e.title }}"</h5>
+                                        <p class="card-text">
+                                            <!--ИНН компании: {{ e.payer }}<br> -->
+                                            Экспертиза начата: {{ e.opened }}<br>
+                                            Тип: {{ e.type }} <br>
+                                            Текущий статус: {{ e.status }} <br>
+                                            Период выполнения работ: {{ e.start_job }} —
+                                            {{ e.end_job }}
+                                        </p>
+
+                                        <div class="row justify-content-start">
+                                            <div class="col-4 col-lg-2">
+                                                <a href="{% url 'case_detail' e.number %}"
+                                                   class="w-100 btn btn-primary">Подробнее</a>
+                                            </div>
+                                            <div class="col-4 col-lg-2">
+                                                <a href="#" class="w-100 btn btn-primary">Чек-лист</a>
+                                            </div>
+
+                                            <div class="col-4 col-lg-2">
+                                                <a href="#" class="w-100 btn btn-primary">Акт проверки</a>
+                                            </div>
+
+                                            <div class="col-4 col-lg-2">
+                                                <a href="#" class="w-100 btn btn-success">Добавить файл</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            {% endverbatim %}
+
+        </div>
+    </main>
+
+    <!-- include vuejs and axios -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/static/cases_get.js"></script>
+
+{% endblock %}
+</body>
+
+</html>

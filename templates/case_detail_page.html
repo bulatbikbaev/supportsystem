@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Экспертизы</title>
+    <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <style>
+
+    </style>
+</head>
+
+
+<body>
+
+{% block content %}
+
+    <main>
+        <div class="container-fluid">
+
+            <div class="row" style="margin-bottom: 30px;">
+                <div class="col-10 col-lg-8">
+                    <div class="col-12 offset-1">
+                        <div id="case_detail">
+                            <h3>Экспертиза № [[case_detail.case.number]] по работе: "[[ case_detail.case.title ]]"</h3>
+
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <h4>Cтатус:
+                                        <span class="text-success">[[ case_detail.case.status ]]</span>
+                                    </h4>
+
+
+{#                                    <table class="table table-borderless caption-top">#}
+{#                                        <caption>Название компании</caption>#}
+{#                                        <td class="bg-light">[[ case_detail.case.payer.title ]]</td>#}
+{#                                    </table>#}
+{##}
+{#                                    <table class="table table-borderless caption-top">#}
+{#                                        <caption>ИНН компании</caption>#}
+{#                                        <td class="bg-light">[[ case_detail.case.payer ]]</td>#}
+{#                                    </table>#}
+{##}
+{#                                    <table class="table table-borderless caption-top">#}
+{#                                        <caption>КПП компании</caption>#}
+{#                                        <td class="bg-light">[[ case_detail.case.payer.kpp ]]</td>#}
+{#                                    </table>#}
+{##}
+{#                                    <table class="table table-borderless caption-top">#}
+{#                                        <caption>Email компании</caption>#}
+{#                                        <td class="bg-light">[[ case_detail.case.payer.email ]]</td>#}
+{#                                    </table>#}
+{##}
+{#                                    <table class="table table-borderless caption-top">#}
+{#                                        <caption>Телефон компании</caption>#}
+{#                                        <td class="bg-light">#}
+{#                                            {% if expertise.payer.phone %}#}
+{#                                                [[ case_detail.case..payer.phone ]]#}
+{#                                            {% else %}#}
+{#                                                Не указан#}
+{#                                            {% endif %}</td>#}
+{#                                    </table>#}
+{##}
+{##}
+{#                                    <table class="table table-borderless caption-top">#}
+{#                                        <caption>ФИО руководителя</caption>#}
+{#                                        <td class="bg-light">#}
+{#                                            {% if expertise.payer.head_full_name %}#}
+{#                                                [[ case_detail.case.head_full_name ]]#}
+{#                                            {% else %}#}
+{#                                                Не указано#}
+{#                                            {% endif %}#}
+{#                                        </td>#}
+{#                                    </table>#}
+{##}
+{#                                    <table class="table table-borderless caption-top">#}
+{#                                        <caption>ФИО главного бухгалтера</caption>#}
+{#                                        <td class="bg-light">#}
+{#                                            {% if expertise.payer.chief_accountant_full_name %}#}
+{#                                                [[ expertise.payer.chief_accountant_full_name ]]#}
+{#                                            {% else %}#}
+{#                                                Не указано#}
+{#                                            {% endif %}#}
+{#                                        </td>#}
+{#                                    </table>#}
+
+                                    <table class="table table-borderless caption-top">
+                                        <caption>Налоговый орган</caption>
+                                        <td class="bg-light">[[ case_detail.case.authority ]]</td>
+                                    </table>
+
+                                    <table class="table table-borderless caption-top">
+                                        <caption>Дата начала</caption>
+                                        <td class="bg-light">[[ case_detail.case.opened ]]</td>
+                                    </table>
+
+                                    <table class="table table-borderless caption-top">
+                                        <caption>Период выполнения</caption>
+                                        <td class="bg-light">[[ case_detail.case.start_job ]] —
+                                            [[ case_detail.case.end_job ]]</td>
+                                    </table>
+
+                                    <table class="table table-borderless caption-top">
+                                        <caption>Тип</caption>
+                                        <td class="bg-light">[[ case_detail.case.type ]]</td>
+                                    </table>
+
+
+                                    <h4 style="margin-top: 25px;">Вложения</h4>
+                                    <div v-for="d in case_docs">
+                                        <p style="margin: 7px;"><a
+                                                style="color: #1976d2; text-decoration: none; cursor: pointer;"
+                                                href="#">[[ d.type ]] от [[ d.added]]</a>
+                                        </p>
+                                    </div>
+
+                                    <h4 style="margin-top: 25px;">Чек-листы экспертизы</h4>
+                                    {% for i in expertise.case_checklist.all %}
+                                        <p style="margin: 7px;"><a
+                                                style="color: #1976d2; text-decoration: none; cursor: pointer;"
+                                                href="#">Чек-лист от
+                                            [[ case_detail.case.filled]]</a></p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- include vuejs and axios -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- vue js script for this page-->
+    <script>
+        window.case_number = "{{ case_number }}"
+    </script>
+    <script src="/static/case_detail.js"></script>
+{% endblock %}
+
+</body>
+</html>
+

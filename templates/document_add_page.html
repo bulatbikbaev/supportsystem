@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Добавить документ</title>
+    <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <style>
+
+    </style>
+</head>
+
+
+<body>
+
+{% block content %}
+
+    <div id="doc_add">
+        <!-- form -->
+        <form enctype="multipart/form-data">
+            <div class="row mt-5">
+
+                <div class="col-10 col-lg-8">
+                    <div class="col-12 offset-1">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <label for="inputTheme" class="col-3 col-form-label theme-class">Тип
+                                        документа</label>
+                                    <div class="col-8">
+                                        <!-- Перебор типов документа для добавления в список -->
+                                        <select v-model="document_type" required="true" class="form-control"
+                                                id="theme-select">
+                                            {% for t in doc_types_queryset %}
+                                                <option value="{{ t.title }}">
+                                                    {{ t.title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="formFile"
+                                           class="col-3 col-form-label">Файл</label>
+                                    <div class="col-8">
+                                        <input type="file" class="form-control" @change="getNewFile"
+                                               v-model="new_document"
+                                               required="true"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-3">
+                                    <button type="submit"
+                                            class="mt-5 mb-3 Button_button__2Lf63 Button_button__medium__2mCsW Button_button__orange__3eFfI Button_button__100__2sNOJ"
+                                            v-on:click.prevent="submitForm"
+                                            value="submit">Добавить файл
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <!-- include vuejs and axios -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+        window.case_number = "{{ case_number }}"
+    </script>
+
+    <script src="/static/document_add.js"></script>
+
+{% endblock %}
+
+</body>
+</html>
